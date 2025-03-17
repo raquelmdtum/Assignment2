@@ -2,17 +2,36 @@
 install.packages(c("forecast", "ggplot2"))
 library(forecast)
 library(ggplot2)
+library(stats)
 
 # Set seed for reproducibility
 set.seed(123)
 
 # ----------------------------------------
 
-# ------- Exercise 1 ---------
-
 # ------- Exercise 1.4 ---------
 
+# Defining AR(2) parameters
+phi1 <- -0.7
+phi2 <- -0.2
+ar_params <- c(phi1, phi2)
 
+# Number of lags
+n_lag <- 30
+
+# Compute theoretical autocorrelation function (ACF) using ARMA model
+acf_values <- ARMAacf(ar = ar_params, lag.max = n_lag)
+
+# Save plot
+png("~/Desktop/uni BA/2nd semester/TSA/Assignment2/exer14.png", width = 900, height = 650)
+
+# Plot the autocorrelation function
+plot(0:n_lag, acf_values, type = "h", lwd = 2, col = "black",
+     xlab = "Lag k", ylab = expression(rho(k)),
+     main = "Autocorrelation Function of AR(2) Process")
+points(0:n_lag, acf_values, pch = 16, col = "red")
+grid()
+dev.off()
 
 # ------- Exercise 2 ---------
 
@@ -145,6 +164,3 @@ mtext(expression('SARIMA Model (0,0,1) X (1,0,0)'[12] ~  theta ~  " = -0.4" ~ Ph
 png("~/Desktop/uni BA/2nd semester/TSA/Assignment2/exer26.png", width = 900, height = 650)
 plotit(ts_dat6)  # Re-run the plot function
 dev.off()  # Close the device
-
-# ------- Exercise 3 ---------
-
